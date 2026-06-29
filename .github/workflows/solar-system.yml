@@ -11,10 +11,16 @@ jobs:
   unit-testing:
     name: Unit Testing
     runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: mongoadmin
+          MONGO_INITDB_ROOT_PASSWORD: secret
     env:
       MONGO_URI: 'mongodb://mongoadmin:secret@localhost:27017/?authSource=admin'
-      MONGO_USERNAME: mongoadmin
-      MONGO_PASSWORD: secret
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4

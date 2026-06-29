@@ -23,19 +23,17 @@ app.use(cors())
 //       //  console.log("MongoDB Connection Successful")
 //     }
 // })
+const mongoURI = process.env.MONGO_URI;
 
-mongoose.connect('mongodb://mongoadmin:secret@localhost:27017/?authSource=admin', {
-    user: 'mongoadmin',
-    pass: 'secret',
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}, function(err) {
-    if (err) {
-        console.log("error!! " + err)
-    } else {
-      //  console.log("MongoDB Connection Successful")
-    }
-})
+mongoose
+  .connect(mongoURI)
+  .then(() => {
+    console.log("MongoDB Connection Successful");
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+    process.exit(1);
+  });
 
 var Schema = mongoose.Schema;
 

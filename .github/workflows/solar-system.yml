@@ -19,8 +19,13 @@ jobs:
         env:
           MONGO_INITDB_ROOT_USERNAME: mongoadmin
           MONGO_INITDB_ROOT_PASSWORD: secret
+        options: >-
+            --health-cmd="mongosh --eval 'db.adminCommand({ ping: 1 })'"
+            --health-interval=10s
+            --health-timeout=5s
+            --health-retries=5
     env:
-      MONGO_URI: 'mongodb://mongoadmin:secret@localhost:27017/?authSource=admin'
+       MONGO_URI: ${{ secrets.MONGO_URI }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
